@@ -1,0 +1,130 @@
+[gd_scene load_steps=8 format=3 uid="uid://c7qj1v8m0cmcj"]
+
+[ext_resource type="Script" path="res://scenes/ability/sword_ability/sword_ability.gd" id="1_a3w48"]
+[ext_resource type="Texture2D" uid="uid://l46l3ueelhhr" path="res://scenes/ability/sword_ability/sword.png" id="1_p08hf"]
+[ext_resource type="PackedScene" uid="uid://qsedj8vb3kfm" path="res://scenes/component/hitbox_component.tscn" id="2_nvove"]
+
+[sub_resource type="Animation" id="Animation_11duw"]
+length = 0.001
+step = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("HitboxComponent/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_cy154"]
+resource_name = "swing"
+length = 0.5
+step = 0.15
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.131727, 0.218451, 0.326, 0.49226),
+"transitions": PackedFloat32Array(1.86607, 0.707107, 1.93187, 1.6245),
+"update": 0,
+"values": [0.0, -0.588176, 2.79253, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0001, 0.0002, 0.0003, 0.272031, 0.442847, 0.77424),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 2.2974, 4.14106, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0.484184, 0.484184), Vector2(0.484184, 0.484184), Vector2(0.741748, 0.741748), Vector2(1.4, 1.4), Vector2(0.8, 0.8), Vector2(0, 0)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.48843),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("HitboxComponent/CollisionShape2D:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.226746, 0.363611),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vs1o5"]
+_data = {
+"RESET": SubResource("Animation_11duw"),
+"swing": SubResource("Animation_cy154")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oy3f0"]
+size = Vector2(17, 21)
+
+[node name="SwordAbility" type="Node2D"]
+script = ExtResource("1_a3w48")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_vs1o5")
+}
+autoplay = "swing"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_p08hf")
+offset = Vector2(0, -4.02)
+
+[node name="HitboxComponent" parent="." instance=ExtResource("2_nvove")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+position = Vector2(8.5, -0.5)
+scale = Vector2(1.01292, 1)
+shape = SubResource("RectangleShape2D_oy3f0")
+disabled = true
