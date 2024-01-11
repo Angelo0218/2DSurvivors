@@ -1,0 +1,9 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://cfc1l5dqb71pq"]
+
+[ext_resource type="Script" path="res://resources/upgrades/ability_upgrade.gd" id="1_3ijgh"]
+
+[resource]
+script = ExtResource("1_3ijgh")
+id = "sword_rate"
+name = "劍刃強化"
+description = "增加劍10%傷害力"
